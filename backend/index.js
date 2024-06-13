@@ -31,6 +31,21 @@ app.post("/books", async (req, res) => {
   }
 });
 
+// Retrieve all books
+app.get("/books", async (req, res) => {
+  try {
+    const books = await Book.find();
+
+    return res.status(200).send({ 
+      count: books.length,
+      data: books
+     });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({ message: error.message });
+  }
+});
+
 mongoose
   .connect(mongodbURL)
   .then(() => {
