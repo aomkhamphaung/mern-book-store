@@ -36,10 +36,23 @@ app.get("/books", async (req, res) => {
   try {
     const books = await Book.find();
 
-    return res.status(200).send({ 
+    return res.status(200).send({
       count: books.length,
-      data: books
-     });
+      data: books,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({ message: error.message });
+  }
+});
+
+// Retrieve one book
+app.get("/books/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(id);
+    const book = await Book.findById(id);
+    return res.status(200).json({ book });
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({ message: error.message });
