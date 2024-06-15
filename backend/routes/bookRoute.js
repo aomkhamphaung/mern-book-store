@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
       publishedYear: req.body.publishedYear,
     };
     const book = await Book.create(newBook);
-    return res.status(201).send({ book });
+    return res.status(201).json({ data: book });
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({ message: error.message });
@@ -41,9 +41,8 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(id);
     const book = await Book.findById(id);
-    return res.status(200).json({ book });
+    return res.status(200).json({ data: book });
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({ message: error.message });
